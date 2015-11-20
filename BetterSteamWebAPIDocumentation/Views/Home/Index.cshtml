@@ -16,8 +16,6 @@
 <body>
     <div class="container body-content">
         <h4><a href="#interfaces">Jump to code documentation <i class="glyphicon glyphicon-arrow-right"></i></a></h4>
-        <h1>Getting Started</h1>
-        <hr />
         <div style="margin-bottom: 75px">
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -108,6 +106,7 @@
         </div>
         <h1 id="interfaces">Documented Interfaces and Methods</h1>
         <hr />
+        <div class="alert alert-info"><i class="glyphicon glyphicon-info-sign"></i> The contents of this section are updated automatically every 24 hours.</div>
         @foreach (var steamWebApiInterface in Model)
         {
             <div style="margin-bottom: 75px;">
@@ -174,9 +173,13 @@
                 }
             </div>
         }
-    </div>
-    <div class="footer">
-        <footer></footer>
+        <div class="footer">
+            <footer>
+                <small class="text-muted">This page is offered to the community for reference only. This page is not affiliated or associated with Valve or Steam in any manner.</small>
+                <br />
+                <small class="text-muted">See the source code on <a href="https://github.com/babelshift/BetterSteamWebAPIDocumentation">GitHub</a>. Visit my <a href="http://www.discussiongenerator.com">blog</a>.</small>
+            </footer>
+        </div>
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
