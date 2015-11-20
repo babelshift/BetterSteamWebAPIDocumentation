@@ -11,6 +11,7 @@ namespace BetterSteamWebAPIDocumentation.Controllers
 {
     public class HomeController : Controller
     {
+        [OutputCache(Duration = 86400, Location = System.Web.UI.OutputCacheLocation.Server)]
         public async Task<ActionResult> Index()
         {
             string steamWebApiKey = ConfigurationManager.AppSettings["steamWebApiKey"].ToString();
