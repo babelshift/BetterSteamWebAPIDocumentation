@@ -118,10 +118,13 @@
                         <div class="panel-heading">
                             <strong>@steamWebApiMethod.Name</strong>
                             <span class="label label-info">Version: @steamWebApiMethod.Version</span>
-                            <span class="label label-success">HttpMethod: @steamWebApiMethod.HttpMethod</span>
+                        </div>
+                        <div class="panel-body">
+                            <span class="label label-success">@steamWebApiMethod.HttpMethod</span>
+                            <code>@String.Format("https://api.steampowered.com/{0}/{1}/v{2}", steamWebApiInterface.Name, steamWebApiMethod.Name, steamWebApiMethod.Version)</code>
                         </div>
                         @if (steamWebApiMethod.Parameters.Count > 0)
-                    {
+                        {
                             <table class="table">
                                 <thead>
                                     <tr>
