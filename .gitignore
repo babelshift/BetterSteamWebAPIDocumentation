@@ -1,4 +1,4 @@
-﻿App_Data/
+App_Data/
 *.mdf
 *.ldf
 ###################
@@ -76,3 +76,4 @@ _[Ss]cripts
 *.nupkg
 *.ncrunchsolution
 *.dot[Cc]over 
+DO_NOT_ADD_TO_GIT/
