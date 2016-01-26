@@ -1,4 +1,5 @@
 ﻿using SteamWebAPI2;
+using SteamWebAPI2.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,7 +16,7 @@ namespace BetterSteamWebAPIDocumentation.Controllers
         public async Task<ActionResult> Index()
         {
             string steamWebApiKey = ConfigurationManager.AppSettings["steamWebApiKey"].ToString();
-            SteamWebSession session = new SteamWebSession(steamWebApiKey);
+            SteamWebAPIUtil session = new SteamWebAPIUtil(steamWebApiKey);
             var interfaces = await session.GetSupportedAPIListAsync();
 
             return View(interfaces);
