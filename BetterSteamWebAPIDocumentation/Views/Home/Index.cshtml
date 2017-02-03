@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Better Steam Web API Documentation</title>
     <link rel="canonical" href="@Request.Url.AbsoluteUri" />
-    <link rel="shortcut icon" href="~/Content/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon">
     @Styles.Render("~/Content/bootstrap.min.css")
     @Styles.Render("~/Content/bootstrap-paper.min.css")
     @Styles.Render("~/Content/css")
@@ -30,15 +30,15 @@
         })(window, document, 'script', 'dataLayer', 'GTM-NQ4557');</script>
     <!-- End Google Tag Manager -->
     <div class="container body-content">
-        <h4><a href="#interfaces">Jump to code documentation <i class="glyphicon glyphicon-arrow-right"></i></a></h4>
         <div style="margin-bottom: 75px">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    How to Get Started with Steam Web API
+                    Purpose of this Documentation
                 </div>
                 <div class="panel-body">
-                    In order to use the Steam Web API, you have to request a key here: <a href="https://steamcommunity.com/dev/apikey">https://steamcommunity.com/dev/apikey</a>.
-                    This key acts as your secret identifier when making requests to the API, so don't lose or share it.
+                    I created this documentation to make up for the abysmal lack of any official documentation on the part of Valve. Sure, they maintain various wikis, but they're manually maintained, 
+                    rarely updated, and often don't reflect the current nature of the Steam Web API. To solve that problem, this page will update every 24 hours with the latest state of the Steam Web API public endpoints.
+                    In addition, I will regularly update the various <strong>How To</strong> sections in case something more detailed changes.
                 </div>
             </div>
             <div class="panel panel-primary">
@@ -46,6 +46,9 @@
                     How to Make a Steam Web API Request
                 </div>
                 <div class="panel-body">
+                    <h4>Getting Started</h4>
+                    In order to use the Steam Web API, you have to request a key here: <a href="https://steamcommunity.com/dev/apikey">https://steamcommunity.com/dev/apikey</a>.
+                    This key acts as your secret identifier when making requests to the API, so don't lose or share it.
                     <h4>Requests contain the following elements</h4>
                     <dl class="dl-horizontal">
                         <dt>Base URL</dt>
@@ -119,19 +122,15 @@
                 </div>
             </div>
         </div>
-        <h1 id="interfaces">Interfaces and Methods</h1>
-        <hr />
-        <div class="alert alert-info"><i class="glyphicon glyphicon-info-sign"></i> The contents of this section are updated automatically every 24 hours.</div>
-        <div class="alert alert-info"><i class="glyphicon glyphicon-info-sign"></i> Only publicly available and listed interfaces are included in this documentation.</div>
         @foreach (var steamWebApiInterface in Model)
         {
             <div style="margin-bottom: 75px;">
-                <h2>@steamWebApiInterface.Name</h2>
+                <h3>@steamWebApiInterface.Name</h3>
                 @foreach (var steamWebApiMethod in steamWebApiInterface.Methods)
                 {
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <strong>@steamWebApiMethod.Name</strong>
+                            <strong><span class="text-muted">@steamWebApiInterface.Name/</span>@steamWebApiMethod.Name</strong>
                             <span class="label label-info">Version: @steamWebApiMethod.Version</span>
                         </div>
                         <div class="panel-body">
