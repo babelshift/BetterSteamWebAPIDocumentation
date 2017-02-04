@@ -1,4 +1,4 @@
-﻿@model IReadOnlyCollection<SteamWebAPI2.Models.SteamInterface>
+﻿@model IReadOnlyCollection<Steam.Models.SteamInterfaceModel>
 
 <!DOCTYPE html>
 <html>
@@ -134,8 +134,11 @@
                             <span class="label label-info">Version: @steamWebApiMethod.Version</span>
                         </div>
                         <div class="panel-body">
-                            <span class="label label-success">@steamWebApiMethod.HttpMethod</span>
-                            <code>@String.Format("https://api.steampowered.com/{0}/{1}/v{2}", steamWebApiInterface.Name, steamWebApiMethod.Name, steamWebApiMethod.Version)</code>
+                            @if(!String.IsNullOrWhiteSpace(steamWebApiMethod.Description))
+                            {
+                                <p>@steamWebApiMethod.Description</p>
+                            }
+                            <pre><span class="text-danger"><strong>@steamWebApiMethod.HttpMethod</strong></span> @String.Format("https://api.steampowered.com/{0}/{1}/v{2}", steamWebApiInterface.Name, steamWebApiMethod.Name, steamWebApiMethod.Version)</pre>
                         </div>
                         @if (steamWebApiMethod.Parameters.Count > 0)
                         {

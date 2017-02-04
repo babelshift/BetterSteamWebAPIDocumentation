@@ -19,7 +19,7 @@ namespace BetterSteamWebAPIDocumentation.Controllers
             SteamWebAPIUtil session = new SteamWebAPIUtil(steamWebApiKey);
             var interfaces = await session.GetSupportedAPIListAsync();
 
-            return View(interfaces);
+            return View(interfaces.Data);
         }
     }
 }
