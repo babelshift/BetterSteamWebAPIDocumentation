@@ -1,3 +1,4 @@
+appsettings.Development.json
 App_Data/
 *.mdf
 *.ldf
