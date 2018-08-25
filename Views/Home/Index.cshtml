@@ -1,0 +1,166 @@
+﻿@model IReadOnlyCollection<Steam.Models.SteamInterfaceModel>
+
+<div style="margin-bottom: 75px">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+                    Purpose of this Documentation
+                </div>
+                <div class="panel-body">
+                    I created this documentation to make up for the abysmal lack of any official documentation on the part of Valve. Sure, they maintain various wikis, but they're manually maintained, 
+                    rarely updated, and often don't reflect the current nature of the Steam Web API. To solve that problem, this page will update every 24 hours with the latest state of the Steam Web API public endpoints.
+                    In addition, I will regularly update the various <strong>How To</strong> sections in case something more detailed changes.
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    How to Make a Steam Web API Request
+                </div>
+                <div class="panel-body">
+                    <h4>Getting Started</h4>
+                    In order to use the Steam Web API, you have to request a key here: <a href="https://steamcommunity.com/dev/apikey">https://steamcommunity.com/dev/apikey</a>.
+                    This key acts as your secret identifier when making requests to the API, so don't lose or share it.
+                    <h4>Requests contain the following elements</h4>
+                    <dl class="dl-horizontal">
+                        <dt>Base URL</dt>
+                        <dd>Usually <code>https://api.steampowered.com</code> but there's no guarantee that it won't change in the future.</dd>
+                        <dt>Interface Name</dt>
+                        <dd>Indicates which method group (interface) you want to use. Methods are usually grouped by similarities, but that doesn't seem to be a hard and fast rule.</dd>
+                        <dt>Method Name</dt>
+                        <dd>Indicates which method within the interface you want to use.</dd>
+                        <dt>Method Version</dt>
+                        <dd>Indicates which version of the method you want to use. Valve will occasionally (almost never) update the API and roll the version number on the method. This allows applications to continue working with older versions while new applications can take advantage of the new versions</dd>
+                        <dt>Parameters</dt>
+                        <dd><span class="label label-info">sometimes optional</span> A one to many list of parameters to be passed to the selected method. Parameters are delimited by the <code>&amp;</code> character.</dd>
+                    </dl>
+                    <h4>Request URL format</h4>
+                    <code>https://{base_url}/{interface}/{method}/{version}?{parameters}</code>
+                    <h4>Sample request URL</h4>
+                    <code>http://api.steampowered.com/ISteamWebAPIUtil/GetSupportedAPIList/v1/</code>
+                    <h4>Sample request URL with parameters</h4>
+                    <code>http://api.steampowered.com/ISteamWebAPIUtil/GetSupportedAPIList/v1/?key=1234567890&steamid=000123000456</code>
+                </div>
+            </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    How to Use a Steam Web API Response
+                </div>
+                <div class="panel-body">
+                    <h4>Response format</h4>
+                    Responses to the requests can come in three different formats:
+                    <code>json</code>, <code>vdf</code>, <code>xml</code>. The default and preferred format is <code>json</code>.
+                    <h4>Sample request/response</h4>
+                    <dl class="dl-horizontal">
+                        <dt>Request URL</dt>
+                        <dd><code>https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key={key}&steamids=76561197960361544</code></dd>
+                        <dt>Response Format</dt>
+                        <dd><code>json</code></dd>
+                    </dl>
+                    Note that the <code>{key}</code> parameter is not filled in because it is a secret that you must provide.
+                    <br />
+                    <br />
+                    <pre>
+{
+	"response": {
+		"players": [
+			{
+				"steamid": "76561197960361544",
+				"communityvisibilitystate": 3,
+				"profilestate": 1,
+				"personaname": "aro",
+				"lastlogoff": 1447902060,
+				"commentpermission": 1,
+				"profileurl": "http://steamcommunity.com/id/aro/",
+				"avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/1c/1cc16a968510ac7a3cf79bdae96c2c494e3e5e03.jpg",
+				"avatarmedium": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/1c/1cc16a968510ac7a3cf79bdae96c2c494e3e5e03_medium.jpg",
+				"avatarfull": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/1c/1cc16a968510ac7a3cf79bdae96c2c494e3e5e03_full.jpg",
+				"personastate": 1,
+				"realname": "The Dude",
+				"primaryclanid": "103582791435784710",
+				"timecreated": 1063378043,
+				"personastateflags": 0,
+				"gameextrainfo": "Dota 2",
+				"gameid": "570",
+				"loccountrycode": "US",
+				"locstatecode": "FL",
+				"loccityid": 928
+			}
+		]
+		
+	}
+}
+                    </pre>
+                </div>
+            </div>
+        </div>
+        @foreach (var steamWebApiInterface in Model)
+        {
+            <div style="margin-bottom: 75px;">
+                <h3>@steamWebApiInterface.Name</h3>
+                @foreach (var steamWebApiMethod in steamWebApiInterface.Methods)
+                {
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong><span class="text-muted">@steamWebApiInterface.Name/</span>@steamWebApiMethod.Name</strong>
+                            <span class="label label-info">Version: @steamWebApiMethod.Version</span>
+                        </div>
+                        <div class="panel-body">
+                            @if(!String.IsNullOrWhiteSpace(steamWebApiMethod.Description))
+                            {
+                                <p>@steamWebApiMethod.Description</p>
+                            }
+                            <pre><span class="text-danger"><strong>@steamWebApiMethod.HttpMethod</strong></span> @String.Format("https://api.steampowered.com/{0}/{1}/v{2}", steamWebApiInterface.Name, steamWebApiMethod.Name, steamWebApiMethod.Version)</pre>
+                        </div>
+                        @if (steamWebApiMethod.Parameters.Count > 0)
+                        {
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Required?</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var steamWebApiParameter in steamWebApiMethod.Parameters)
+                                    {
+                                        <tr>
+                                            <td>@steamWebApiParameter.Name</td>
+                                            <td>@steamWebApiParameter.Type</td>
+                                            <td>
+                                                @if (steamWebApiParameter.IsOptional)
+                                                {
+                                                    <i class="glyphicon glyphicon-remove text-danger"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="glyphicon glyphicon-ok text-success"></i>
+                                                }
+                                            </td>
+                                            @if (!String.IsNullOrEmpty(steamWebApiParameter.Description))
+                                            {
+                                                <td>
+                                                    @steamWebApiParameter.Description
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td class="danger">
+                                                    This parameter has no listed description.
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="panel-body">
+                                This method has no listed parameters.
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
