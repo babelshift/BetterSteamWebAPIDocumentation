@@ -19,6 +19,7 @@ namespace BetterSteamWebAPIDocumentation.Controllers
             Configuration = configuration;
         }
 
+        [ResponseCache(Duration = 86400, Location = ResponseCacheLocation.Client)]
         public async Task<IActionResult> Index()
         {
             string steamWebApiKey = Configuration.GetValue<string>("SteamWebApiKey");
