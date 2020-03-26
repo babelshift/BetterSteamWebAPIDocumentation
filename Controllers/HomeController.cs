@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using BetterSteamWebAPIDocumentation.Models;
 using SteamWebAPI2.Interfaces;
 using Microsoft.Extensions.Configuration;
+using SteamWebAPI2.Utilities;
+using System.Net.Http;
 
 namespace BetterSteamWebAPIDocumentation.Controllers
 {
@@ -22,8 +24,9 @@ namespace BetterSteamWebAPIDocumentation.Controllers
         [ResponseCache(Duration = 86400, Location = ResponseCacheLocation.Client, NoStore = false)]
         public async Task<IActionResult> Index()
         {
-            string steamWebApiKey = Configuration.GetValue<string>("SteamWebApiKey");
-            SteamWebAPIUtil session = new SteamWebAPIUtil(steamWebApiKey);
+            string steamWebApiKey = Configuration["SteamWebApiKey"];
+            var factory = new SteamWebInterfaceFactory(steamWebApiKey);
+            var session = factory.CreateSteamWebInterface<SteamWebAPIUtil>(new HttpClient());
             var interfaces = await session.GetSupportedAPIListAsync();
 
             return View(interfaces.Data);

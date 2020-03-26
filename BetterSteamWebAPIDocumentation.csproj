@@ -1,12 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>3d1b5b94-9849-4fb2-8ca3-90ba96aa2a42</UserSecretsId>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="SteamWebAPI2" Version="4.0.8" />
+    <PackageReference Include="SteamWebAPI2" Version="4.1.1" />
   </ItemGroup>
-
 </Project>
